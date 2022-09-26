@@ -13,8 +13,8 @@ namespace Battleship.Tests
             var boardSetter = new BoardSetter();
             var board = new Board(10);
             boardSetter.SetupBoard(board);
-            AssertCorrectCountOfFieldTypeOnBoard(board, EFieldType.Battleship, Consts.BATTLESHIP_LENGTH);
-            //TODO check if they are in one row or column
+            AssertCorrectCountOnBoard(board, EFieldType.Battleship, Consts.BATTLESHIP_LENGTH);
+            AssertCorrectPlacementOnBoard(board, EFieldType.Battleship, Consts.BATTLESHIP_ID, Consts.BATTLESHIP_LENGTH);
         }
 
         [Fact]
@@ -23,32 +23,25 @@ namespace Battleship.Tests
             var boardSetter = new BoardSetter();
             var board = new Board(10);
             boardSetter.SetupBoard(board);
-            AssertCorrectCountOfFieldTypeOnBoard(board, EFieldType.Destroyer, Consts.DESTROYER_LENGTH * 2);
-            //TODO check if they are in one row or column
+            AssertCorrectCountOnBoard(board, EFieldType.Destroyer, Consts.DESTROYER_LENGTH * 2);
+            AssertCorrectPlacementOnBoard(board, EFieldType.Destroyer, Consts.DESTROYER_1_ID, Consts.DESTROYER_LENGTH);
+            AssertCorrectPlacementOnBoard(board, EFieldType.Destroyer, Consts.DESTROYER_2_ID, Consts.DESTROYER_LENGTH);
         }
 
-        private void AssertCorrectCountOfFieldTypeOnBoard(Board board, EFieldType type, int expectedCount)
+        private void AssertCorrectCountOnBoard(Board board, EFieldType type, int expectedCount)
         {
             Assert.True(board.Fields.Sum(x => x.Count(y => y.Type == type)) == expectedCount);
         }
 
-        private void AssertCorrectPlacementOfFieldTypeOnBoard(Board board, EFieldType type)
+        private void AssertCorrectPlacementOnBoard(Board board, EFieldType type, int shipId, int expectedCount)
         {
-            //TODO - sprawdzic jak to sprawdzic:
-            //glowny problem takie ustawienie 
-            //
-            // D D D D D
-            // D 
-            // D 
-            // D 
+            //TODO check if fields are in one group
+            var onlyOneColumnContainsExpectedShipId =
+                board.Fields.Count(row => row.Count(field => field.Type == type && field.ShipId == shipId) == expectedCount) == 1;
+            var onlyOneRowContainsExpectedShipId =
+                board.Fields.Count(row => row.Count(field => field.Type == type && field.ShipId == shipId) == 1) == expectedCount;
 
-            //for (int x = 0; x < board.Size; x++)
-            //{
-            //    for (int y = 0; y < board.Size; y++)
-            //    {
-            //        if (board.Fields[x][y].Type == type)
-            //    }
-            //}
+            Assert.True(onlyOneColumnContainsExpectedShipId | onlyOneRowContainsExpectedShipId);
         }
     }
 }

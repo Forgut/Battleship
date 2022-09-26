@@ -32,34 +32,37 @@ namespace Battleship.Logic
                 _fields[i] = new Field[size];
             for (int x = 0; x < size; x++)
                 for (int y = 0; y < size; y++)
-                    _fields[x][y] = new Field(EFieldType.Water, isHit: false);
+                    _fields[x][y] = new Field(EFieldType.Water, isHit: false, shipId: null);
             Size = size;
         }
 
         public Field[][] Fields => _fields;
         public int Size { get; }
 
-        public void SetFieldType(int x, int y, EFieldType type)
+        public void SetFieldType(int x, int y, EFieldType type, int? shipId)
         {
             _fields[x][y].Type = type;
             _fields[x][y].IsHit = false;
+            _fields[x][y].ShipId = shipId;
         }
     }
 
     public interface ISettable
     {
-        void SetFieldType(int x, int y, EFieldType type);
+        void SetFieldType(int x, int y, EFieldType type, int? shipId);
         int Size { get; }
     }
 
     public class Field
     {
-        public Field(EFieldType type, bool isHit)
+        public Field(EFieldType type, bool isHit, int? shipId)
         {
             Type = type;
             IsHit = isHit;
+            ShipId = shipId;
         }
 
+        public int? ShipId { get; internal set; }
         public EFieldType Type { get; internal set; }
         public bool IsHit { get; internal set; }
     }

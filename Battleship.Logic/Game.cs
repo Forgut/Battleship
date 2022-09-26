@@ -8,23 +8,33 @@ namespace Battleship.Logic
 {
     public class Game
     {
-        private readonly int _size;
         private readonly IBoardSetter _boardSetter;
-        private readonly Board _playerBoard;
-        private readonly Board _computerBoard;
 
         public Game(int size, IBoardSetter boardSetter)
         {
-            _size = size;
+            Size = size;
             _boardSetter = boardSetter;
-            _playerBoard = new Board(size);
-            _computerBoard = new Board(size);
+            PlayerBoard = new Board(size);
+            ComputerBoard = new Board(size);
         }
+
+        public int Size { get; private set; }
+        public ETurn Turn { get; private set; }
+        public Board PlayerBoard { get; private set; }
+        public Board ComputerBoard { get; private set; }
 
         public void PrepareGame()
         {
-            _boardSetter.SetupBoard(_playerBoard);
-            _boardSetter.SetupBoard(_computerBoard);
+            _boardSetter.SetupBoard(PlayerBoard);
+            _boardSetter.SetupBoard(ComputerBoard);
         }
+
+
+    }
+
+    public enum ETurn
+    {
+        Player,
+        Computer,
     }
 }

@@ -13,12 +13,12 @@ namespace Battleship.Logic
         public void SetupBoard(ISettable board)
         {
             var takenCoordinates = new List<Coordinate>();
-            SetupBattleship(board, takenCoordinates);
-            SetupDestroyer(board, takenCoordinates);
-            SetupDestroyer(board, takenCoordinates);
+            SetupBattleship(board, takenCoordinates, Consts.BATTLESHIP_ID);
+            SetupDestroyer(board, takenCoordinates, Consts.DESTROYER_1_ID);
+            SetupDestroyer(board, takenCoordinates, Consts.DESTROYER_2_ID);
         }
 
-        private void SetupBattleship(ISettable board, List<Coordinate> takenCoordinates)
+        private void SetupBattleship(ISettable board, List<Coordinate> takenCoordinates, int shipId)
         {
             var direction = GetRandomDirection();
             int startX, startY;
@@ -37,7 +37,7 @@ namespace Battleship.Logic
                 startY = GetRandomCoordinate(minPosition, maxPosition);
                 for (int i = startX; i < startX + shipLength; i++)
                 {
-                    board.SetFieldType(i, startY, EFieldType.Battleship);
+                    board.SetFieldType(i, startY, EFieldType.Battleship, shipId);
                     takenCoordinates.Add(new Coordinate(i, startY));
                 }
             }
@@ -48,13 +48,13 @@ namespace Battleship.Logic
                 startY = GetRandomCoordinate(minPosition, maxPosition - shipLength);
                 for (int i = startY; i < startY + shipLength; i++)
                 {
-                    board.SetFieldType(startX, i, EFieldType.Battleship);
+                    board.SetFieldType(startX, i, EFieldType.Battleship, shipId);
                     takenCoordinates.Add(new Coordinate(startX, i));
                 }
             }
         }
 
-        private void SetupDestroyer(ISettable board, List<Coordinate> takenCoordinates)
+        private void SetupDestroyer(ISettable board, List<Coordinate> takenCoordinates, int shipId)
         {
             var direction = GetRandomDirection();
             int startX, startY;
@@ -76,7 +76,7 @@ namespace Battleship.Logic
                 } while (SelectedCoordinatesAreOnForbiddenList(takenCoordinates, startX, startY, EDirection.Vertical));
                 for (int i = startX; i < startX + shipLength; i++)
                 {
-                    board.SetFieldType(i, startY, EFieldType.Destroyer);
+                    board.SetFieldType(i, startY, EFieldType.Destroyer, shipId);
                     takenCoordinates.Add(new Coordinate(i, startY));
                 }
             }
@@ -91,7 +91,7 @@ namespace Battleship.Logic
 
                 for (int i = startY; i < startY + shipLength; i++)
                 {
-                    board.SetFieldType(startX, i, EFieldType.Destroyer);
+                    board.SetFieldType(startX, i, EFieldType.Destroyer, shipId);
                     takenCoordinates.Add(new Coordinate(startX, i));
                 }
             }
