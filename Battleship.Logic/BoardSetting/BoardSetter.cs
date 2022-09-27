@@ -1,13 +1,11 @@
-﻿using System;
+﻿using Battleship.Logic.Core;
+using Battleship.Logic.Core.Enums;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Battleship.Logic
+namespace Battleship.Logic.BoardSetting
 {
-    public interface IBoardSetter
-    {
-        void SetupBoard(ISettable board);
-    }
     public class BoardSetter : IBoardSetter
     {
         public void SetupBoard(ISettable board)

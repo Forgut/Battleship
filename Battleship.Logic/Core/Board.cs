@@ -1,12 +1,13 @@
-﻿using System;
+﻿using Battleship.Logic.Core.Enums;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Battleship.Logic
+namespace Battleship.Logic.Core
 {
-    public class Board : ISettable
+    public class Board : ISettable, IHittable
     {
         /* [x, y]
          * Y increases horizontaly
@@ -39,38 +40,24 @@ namespace Battleship.Logic
         public Field[][] Fields => _fields;
         public int Size { get; }
 
-        public void SetFieldType(int x, int y, EFieldType type, int? shipId)
+        public void SetFieldType(int row, int column, EFieldType type, int? shipId)
         {
-            _fields[x][y].Type = type;
-            _fields[x][y].IsHit = false;
-            _fields[x][y].ShipId = shipId;
-        }
-    }
-
-    public interface ISettable
-    {
-        void SetFieldType(int x, int y, EFieldType type, int? shipId);
-        int Size { get; }
-    }
-
-    public class Field
-    {
-        public Field(EFieldType type, bool isHit, int? shipId)
-        {
-            Type = type;
-            IsHit = isHit;
-            ShipId = shipId;
+            _fields[column][row].Type = type;
+            _fields[column][row].IsHit = false;
+            _fields[column][row].ShipId = shipId;
         }
 
-        public int? ShipId { get; internal set; }
-        public EFieldType Type { get; internal set; }
-        public bool IsHit { get; internal set; }
-    }
+        public EHitResult MarkFieldAsHit(int row, int column)
+        {
+            var field = _fields[column][row];
+            field.IsHit = true;
+            if (field.Type == EFieldType.Water)
+                return EHitResult.Miss;
 
-    public enum EFieldType
-    {
-        Water,
-        Battleship,
-        Destroyer,
+            if (_fields.Any(c => c.Any(f => f.ShipId == field.ShipId && !f.IsHit)))
+                return EHitResult.Hit;
+
+            return EHitResult.Sunk;
+        }
     }
 }
