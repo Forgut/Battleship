@@ -1,12 +1,7 @@
 ﻿using Battleship.Logic.BoardSetting;
-using Battleship.Logic.Core;
 using Battleship.Logic.Core.Enums;
 using Battleship.Logic.ShootingLogic;
-using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Battleship.Logic.Core
 {

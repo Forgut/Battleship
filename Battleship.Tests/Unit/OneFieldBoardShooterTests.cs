@@ -1,17 +1,11 @@
-﻿using Battleship.Logic;
-using Battleship.Logic.Core;
+﻿using Battleship.Logic.Core;
 using Battleship.Logic.Core.Enums;
 using Battleship.Logic.ShootingLogic;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Xunit;
 
 namespace Battleship.Tests.Unit
 {
-    public class OneFieldBoardShooterTests 
+    public class OneFieldBoardShooterTests
     {
         private const int BOARD_SIZE = 10;
 

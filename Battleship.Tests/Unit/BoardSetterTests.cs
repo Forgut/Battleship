@@ -1,10 +1,9 @@
 ﻿using Battleship.Logic;
-using System;
-using Xunit;
-using System.Linq;
 using Battleship.Logic.BoardSetting;
 using Battleship.Logic.Core;
 using Battleship.Logic.Core.Enums;
+using System.Linq;
+using Xunit;
 
 namespace Battleship.Tests.Unit
 {

@@ -1,10 +1,8 @@
-﻿using Battleship.Logic;
-using Battleship.Logic.BoardSetting;
+﻿using Battleship.Logic.BoardSetting;
 using Battleship.Logic.ComputerShooters;
 using Battleship.Logic.Core;
 using Battleship.Logic.Core.Enums;
 using Battleship.Logic.ShootingLogic;
-using System;
 
 namespace Battleship
 {

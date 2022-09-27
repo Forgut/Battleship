@@ -1,10 +1,6 @@
-﻿using Battleship.Logic;
-using Battleship.Logic.ComputerShooters;
-using System;
+﻿using Battleship.Logic.ComputerShooters;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Xunit;
 
 namespace Battleship.Tests.Unit
