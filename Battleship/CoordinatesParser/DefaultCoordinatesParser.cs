@@ -1,14 +1,8 @@
 ﻿using System.Linq;
 using System.Text.RegularExpressions;
 
-namespace Battleship
+namespace Battleship.CoordinatesParser
 {
-    public interface ICoordinatesParser
-    {
-        TextParseResult Parse(string text);
-        RowAndColumnParseResult Parse(int row, int column);
-    }
-
     public class DefaultCoordinatesParser : ICoordinatesParser
     {
         private int _gameSize;
@@ -27,11 +21,14 @@ namespace Battleship
             if (!ValidateInput(text))
                 return new TextParseResult();
 
+            var findLetterRegex = @"[A-Z]";
+            var findNumberRegex = @"[0-9]+";
+
             try
             {
-                var letter = Regex.Match(text, @"[A-Z]").Value.First();
+                var letter = Regex.Match(text, findLetterRegex).Value.First();
                 var row = (int)letter - 65;
-                var number = Regex.Match(text, @"[0-9]+").Value;
+                var number = Regex.Match(text, findNumberRegex).Value;
                 var column = int.Parse(number) - 1;
 
                 if (!ValidateRowAndColumn(row, column))
@@ -73,40 +70,5 @@ namespace Battleship
                 return false;
             return true;
         }
-    }
-
-    public class TextParseResult
-    {
-        public TextParseResult()
-        {
-            IsSuccess = false;
-        }
-
-        public TextParseResult(int row, int column)
-        {
-            Row = row;
-            Column = column;
-            IsSuccess = true;
-        }
-
-        public bool IsSuccess { get; set; }
-        public int Row { get; set; }
-        public int Column { get; set; }
-    }
-    public class RowAndColumnParseResult
-    {
-        public RowAndColumnParseResult()
-        {
-            IsSuccess = false;
-        }
-
-        public RowAndColumnParseResult(string text)
-        {
-            Text = text;
-            IsSuccess = true;
-        }
-
-        public bool IsSuccess { get; set; }
-        public string Text { get; set; }
     }
 }

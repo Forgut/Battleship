@@ -1,4 +1,5 @@
-﻿using Xunit;
+﻿using Battleship.CoordinatesParser;
+using Xunit;
 
 namespace Battleship.Tests.Unit
 {

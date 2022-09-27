@@ -3,7 +3,7 @@ using Battleship.Logic.Core.Enums;
 
 namespace Battleship.Logic.ShootingLogic
 {
-    public class OneFieldBoardShooter : IBoardShooter
+    public class DefaultBoardShooter : IBoardShooter
     {
         public EHitResult ShootAtPosition(IHittable board, int row, int column)
         {

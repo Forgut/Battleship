@@ -13,7 +13,7 @@ namespace Battleship.Tests.Unit
         public void Should_mark_field_as_hit_and_return_miss_for_water_hit()
         {
             var board = new Board(BOARD_SIZE);
-            var shooter = new OneFieldBoardShooter();
+            var shooter = new DefaultBoardShooter();
             var result = shooter.ShootAtPosition(board, 3, 3);
             Assert.Equal(EHitResult.Miss, result);
             Assert.True(board.Fields[3][3].IsHit);
@@ -25,7 +25,7 @@ namespace Battleship.Tests.Unit
             var board = new Board(BOARD_SIZE);
             board.SetFieldType(3, 3, EFieldType.Destroyer, 1);
             board.SetFieldType(3, 4, EFieldType.Destroyer, 1);
-            var shooter = new OneFieldBoardShooter();
+            var shooter = new DefaultBoardShooter();
             var result = shooter.ShootAtPosition(board, 3, 3);
             Assert.True(board.Fields[3][3].IsHit);
             Assert.Equal(EHitResult.Hit, result);
@@ -36,7 +36,7 @@ namespace Battleship.Tests.Unit
         {
             var board = new Board(BOARD_SIZE);
             board.SetFieldType(3, 3, EFieldType.Destroyer, 1);
-            var shooter = new OneFieldBoardShooter();
+            var shooter = new DefaultBoardShooter();
             var result = shooter.ShootAtPosition(board, 3, 3);
             Assert.True(board.Fields[3][3].IsHit);
             Assert.Equal(EHitResult.Sunk, result);

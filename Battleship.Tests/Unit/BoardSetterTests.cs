@@ -12,7 +12,7 @@ namespace Battleship.Tests.Unit
         [Fact]
         public void Should_setup_battleship_as_5_fields_on_board()
         {
-            var boardSetter = new BoardSetter();
+            var boardSetter = new DefaultBoardSetter();
             var board = new Board(10);
             boardSetter.SetupBoard(board);
             AssertCorrectCountOnBoard(board, EFieldType.Battleship, Consts.BATTLESHIP_LENGTH);
@@ -22,7 +22,7 @@ namespace Battleship.Tests.Unit
         [Fact]
         public void Should_setup_destroyers_as_2_times_4_fields_on_board()
         {
-            var boardSetter = new BoardSetter();
+            var boardSetter = new DefaultBoardSetter();
             var board = new Board(10);
             boardSetter.SetupBoard(board);
             AssertCorrectCountOnBoard(board, EFieldType.Destroyer, Consts.DESTROYER_LENGTH * 2);

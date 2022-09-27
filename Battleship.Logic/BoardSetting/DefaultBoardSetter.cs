@@ -6,7 +6,7 @@ using System.Linq;
 
 namespace Battleship.Logic.BoardSetting
 {
-    public class BoardSetter : IBoardSetter
+    public class DefaultBoardSetter : IBoardSetter
     {
         public void SetupBoard(ISettable board)
         {

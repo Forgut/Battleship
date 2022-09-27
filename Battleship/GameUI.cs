@@ -1,4 +1,5 @@
-﻿using Battleship.Logic.ComputerShooters;
+﻿using Battleship.CoordinatesParser;
+using Battleship.Logic.ComputerShooters;
 using Battleship.Logic.Core;
 using Battleship.Logic.Core.Enums;
 using System;
