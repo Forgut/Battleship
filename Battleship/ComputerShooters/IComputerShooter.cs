@@ -1,4 +1,4 @@
-﻿namespace Battleship.Logic.ComputerShooters
+﻿namespace Battleship.ComputerShooters
 {
     public interface IComputerShooter
     {

@@ -1,5 +1,5 @@
-﻿using Battleship.CoordinatesParser;
-using Battleship.Logic.ComputerShooters;
+﻿using Battleship.ComputerShooters;
+using Battleship.CoordinatesParser;
 using Battleship.Logic.Core;
 using Battleship.Logic.Core.Enums;
 using System;
@@ -16,6 +16,8 @@ namespace Battleship
         private const string BATTLESHIP_FIELD = "B";
         private const string DESTROYER_FIELD = "D";
 
+        public bool DebugMode { get; set; }
+
         public GameUI(Game game, ICoordinatesParser coordinatesParser, IComputerShooter computerShooter)
         {
             _game = game;
@@ -30,7 +32,11 @@ namespace Battleship
             PrintTurnMark();
 
             PrintPlayerBoard();
-            PrintComputerBoard();
+
+            if (DebugMode)
+                PrintComputerBoardDebug();
+            else
+                PrintComputerBoard();
         }
 
         public EHitResult PrintAndExecuteOrder()
@@ -119,6 +125,34 @@ namespace Battleship
         }
 
         private void PrintComputerBoard()
+        {
+            Console.WriteLine("### Computer board ###");
+            WriteColumnLetters();
+            Console.WriteLine();
+
+            for (int x = 0; x < _game.Size; x++)
+            {
+                WriteRowNumber(x + 1);
+
+                for (int y = 0; y < _game.Size; y++)
+                {
+                    var field = _game.ComputerBoard.Fields[x][y];
+                    if (field.IsHit)
+                    {
+                        var (text, color) = GetColoredTextDependingOnTypeAndHit(field);
+                        WriteInColor($"{text} ", color);
+                    }
+                    else
+                    {
+                        WriteInColor($"{WATER_FIELD} ", ConsoleColor.Blue);
+                    }
+                }
+                Console.WriteLine();
+            }
+            Console.WriteLine();
+        }
+
+        private void PrintComputerBoardDebug()
         {
             Console.WriteLine("### Computer board ###");
             WriteColumnLetters();

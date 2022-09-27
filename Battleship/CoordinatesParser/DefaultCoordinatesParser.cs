@@ -5,7 +5,7 @@ namespace Battleship.CoordinatesParser
 {
     public class DefaultCoordinatesParser : ICoordinatesParser
     {
-        private int _gameSize;
+        private readonly int _gameSize;
 
         public DefaultCoordinatesParser(int gameSize)
         {

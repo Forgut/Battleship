@@ -1,4 +1,4 @@
-﻿using Battleship.Logic.ComputerShooters;
+﻿using Battleship.ComputerShooters;
 using System.Collections.Generic;
 using System.Linq;
 using Xunit;

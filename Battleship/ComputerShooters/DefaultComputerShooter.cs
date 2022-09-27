@@ -2,12 +2,12 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Battleship.Logic.ComputerShooters
+namespace Battleship.ComputerShooters
 {
     public class DefaultComputerShooter : IComputerShooter
     {
         private readonly List<Coordinate> _shotCoordinates;
-        private int _gameSize;
+        private readonly int _gameSize;
         public DefaultComputerShooter(int gameSize)
         {
             _shotCoordinates = new List<Coordinate>();

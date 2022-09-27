@@ -21,7 +21,7 @@ namespace Battleship.Logic.Core
          */
 
 
-        private Field[][] _fields;
+        private readonly Field[][] _fields;
         public Board(int size)
         {
             _fields = new Field[size][];
