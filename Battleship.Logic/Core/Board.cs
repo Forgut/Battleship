@@ -1,4 +1,5 @@
-﻿using Battleship.Logic.Core.Enums;
+﻿using Battleship.Logic.Common.Validation;
+using Battleship.Logic.Core.Enums;
 using System.Linq;
 
 namespace Battleship.Logic.Core
@@ -20,8 +21,9 @@ namespace Battleship.Logic.Core
          90 91 92 93 94 95 96 97 98 99
          */
 
-
         private readonly Field[][] _fields;
+        private readonly CoordinatesValidator _coordinatesValidator;
+
         public Board(int size)
         {
             _fields = new Field[size][];
@@ -31,6 +33,7 @@ namespace Battleship.Logic.Core
                 for (int y = 0; y < size; y++)
                     _fields[x][y] = new Field(EFieldType.Water, isHit: false, shipId: null);
             Size = size;
+            _coordinatesValidator = new CoordinatesValidator(size);
         }
 
         public Field[][] Fields => _fields;
@@ -38,6 +41,9 @@ namespace Battleship.Logic.Core
 
         public void SetFieldType(int row, int column, EFieldType type, int? shipId)
         {
+            if (!_coordinatesValidator.IsValid(row, column))
+                return;
+
             _fields[column][row].Type = type;
             _fields[column][row].IsHit = false;
             _fields[column][row].ShipId = shipId;
@@ -45,6 +51,9 @@ namespace Battleship.Logic.Core
 
         public EHitResult MarkFieldAsHit(int row, int column)
         {
+            if (!_coordinatesValidator.IsValid(row, column))
+                return EHitResult.Miss;
+
             var field = _fields[column][row];
             field.IsHit = true;
             if (field.Type == EFieldType.Water)

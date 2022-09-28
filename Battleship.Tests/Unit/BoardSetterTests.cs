@@ -37,7 +37,6 @@ namespace Battleship.Tests.Unit
 
         private void AssertCorrectPlacementOnBoard(Board board, EFieldType type, int shipId, int expectedCount)
         {
-            //TODO check if fields are in one group
             var onlyOneColumnContainsExpectedShipId =
                 board.Fields.Count(row => row.Count(field => field.Type == type && field.ShipId == shipId) == expectedCount) == 1;
             var onlyOneRowContainsExpectedShipId =

@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using Battleship.Logic.Common.Validation;
+using System.Linq;
 using System.Text.RegularExpressions;
 
 namespace Battleship.CoordinatesParser
@@ -6,10 +7,12 @@ namespace Battleship.CoordinatesParser
     public class DefaultCoordinatesParser : ICoordinatesParser
     {
         private readonly int _gameSize;
+        private readonly CoordinatesValidator _coordinatesValidator;
 
         public DefaultCoordinatesParser(int gameSize)
         {
             _gameSize = gameSize;
+            _coordinatesValidator = new CoordinatesValidator(gameSize);
         }
 
         /// <summary>
@@ -31,7 +34,7 @@ namespace Battleship.CoordinatesParser
                 var number = Regex.Match(text, findNumberRegex).Value;
                 var column = int.Parse(number) - 1;
 
-                if (!ValidateRowAndColumn(row, column))
+                if (!_coordinatesValidator.IsValid(row, column))
                     return new TextParseResult();
 
                 return new TextParseResult(row, column);
@@ -44,7 +47,7 @@ namespace Battleship.CoordinatesParser
 
         public RowAndColumnParseResult Parse(int row, int column)
         {
-            if (!ValidateRowAndColumn(row, column))
+            if (!_coordinatesValidator.IsValid(row, column))
                 return new RowAndColumnParseResult();
 
             var letter = (char)(row + 65);
@@ -58,15 +61,6 @@ namespace Battleship.CoordinatesParser
                 return false;
 
             if (!Regex.IsMatch(input, "^[A-Z]{1}[0-9]+"))
-                return false;
-            return true;
-        }
-
-        private bool ValidateRowAndColumn(int row, int column)
-        {
-            if (row < 0 || row >= _gameSize)
-                return false;
-            if (column < 0 || column >= _gameSize)
                 return false;
             return true;
         }
