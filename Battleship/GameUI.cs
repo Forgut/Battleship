@@ -89,7 +89,7 @@ namespace Battleship
         {
             var winner = _game.CheckGameState();
             if (winner == EGameResult.PlayerWins)
-                WriteInColor("You won!\n", ConsoleColor.Green);
+                WriteInColor("You win!\n", ConsoleColor.Green);
             else if (winner == EGameResult.ComputerWins)
                 WriteInColor("You lost...\n", ConsoleColor.Red);
             else
