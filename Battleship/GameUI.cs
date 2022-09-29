@@ -12,9 +12,8 @@ namespace Battleship
         private readonly ICoordinatesParser _coordinatesParser;
         private readonly IComputerShooter _computerShooter;
 
-        private const string WATER_FIELD = "~";
-        private const string BATTLESHIP_FIELD = "B";
-        private const string DESTROYER_FIELD = "D";
+        private const char WATER_FIELD = '~';
+        private const char SHIP_FIELD = 'O';
 
         public bool DebugMode { get; set; }
 
@@ -227,11 +226,10 @@ namespace Battleship
                 switch (field.Type)
                 {
                     case EFieldType.Water:
-                        return WATER_FIELD;
+                        return WATER_FIELD.ToString();
                     case EFieldType.Battleship:
-                        return BATTLESHIP_FIELD;
                     case EFieldType.Destroyer:
-                        return DESTROYER_FIELD;
+                        return SHIP_FIELD.ToString();
                 }
                 return null;
             }

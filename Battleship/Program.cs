@@ -13,18 +13,20 @@ namespace Battleship
     {
         static void Main(string[] args)
         {
-            var debugMode = RunInDebugMode(args);
+            var debugMode = ShouldRunInDebugMode(args);
             var gameUI = PrepareGameComponents(debugMode);
             GameLoop(gameUI);
         }
 
-        private static bool RunInDebugMode(string[] args)
+        private static bool ShouldRunInDebugMode(string[] args)
         {
             if (args?.Any() != true)
                 return false;
 
-            bool.TryParse(args.First(), out var result);
-            return result;
+            if (bool.TryParse(args.First(), out var result))
+                return result;
+
+            return false;
         }
 
         private static GameUI PrepareGameComponents(bool runInDebugMode)
