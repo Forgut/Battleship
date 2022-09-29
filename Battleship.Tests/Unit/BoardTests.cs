@@ -43,5 +43,23 @@ namespace Battleship.Tests.Unit
             var board = new Board(BOARD_SIZE);
             board.SetFieldType(-1, -1, EFieldType.Destroyer, 0);
         }
+
+        [Fact]
+        public void NoShipsLeftOnBoard_should_return_true_if_all_ships_are_hit_on_board()
+        {
+            var board = new Board(BOARD_SIZE);
+            board.SetFieldType(0, 0, EFieldType.Destroyer, 0);
+            board.MarkFieldAsHit(0, 0);
+            Assert.True(board.NoShipsLeftOnBoard());
+        }
+
+        [Fact]
+        public void NoShipsLeftOnBoard_should_return_false_if_at_least_one_ship_remains_unsunk()
+        {
+            var board = new Board(BOARD_SIZE);
+            board.SetFieldType(0, 0, EFieldType.Destroyer, 0);
+            board.MarkFieldAsHit(0, 0);
+            Assert.True(board.NoShipsLeftOnBoard());
+        }
     }
 }

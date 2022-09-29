@@ -64,5 +64,12 @@ namespace Battleship.Logic.Core
 
             return EHitResult.Sunk;
         }
+
+        public bool NoShipsLeftOnBoard()
+        {
+            return !_fields
+                .Any(row => row
+                .Any(field => field.Type != EFieldType.Water && !field.IsHit));
+        }
     }
 }

@@ -41,14 +41,10 @@ namespace Battleship.Logic.Core
 
         public EGameResult CheckGameState()
         {
-            if (!PlayerBoard.Fields
-                .Any(row => row
-                .Any(field => field.Type != EFieldType.Water && !field.IsHit)))
+            if (PlayerBoard.NoShipsLeftOnBoard())
                 return EGameResult.ComputerWins;
 
-            if (!ComputerBoard.Fields
-                .Any(row => row
-                .Any(field => field.Type != EFieldType.Water && !field.IsHit)))
+            if (ComputerBoard.NoShipsLeftOnBoard())
                 return EGameResult.PlayerWins;
 
             return EGameResult.GoesOn;
