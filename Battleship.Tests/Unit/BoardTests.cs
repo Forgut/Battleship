@@ -58,8 +58,7 @@ namespace Battleship.Tests.Unit
         {
             var board = new Board(BOARD_SIZE);
             board.SetFieldType(0, 0, EFieldType.Destroyer, 0);
-            board.MarkFieldAsHit(0, 0);
-            Assert.True(board.NoShipsLeftOnBoard());
+            Assert.False(board.NoShipsLeftOnBoard());
         }
     }
 }
