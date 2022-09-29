@@ -60,5 +60,14 @@ namespace Battleship.Tests.Unit
             board.SetFieldType(0, 0, EFieldType.Destroyer, 0);
             Assert.False(board.NoShipsLeftOnBoard());
         }
+
+        [Fact]
+        public void GetFieldAt_should_return_field_in_specified_row_and_column()
+        {
+            var board = new Board(BOARD_SIZE);
+            board.SetFieldType(row: 5, column: 4, EFieldType.Destroyer, 0);
+            var field = board.GetFieldAt(row: 5, column: 4);
+            Assert.Equal(field.Type, board.Fields[4][5].Type);
+        }
     }
 }

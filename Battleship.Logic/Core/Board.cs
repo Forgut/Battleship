@@ -71,5 +71,10 @@ namespace Battleship.Logic.Core
                 .Any(row => row
                 .Any(field => field.Type != EFieldType.Water && !field.IsHit));
         }
+
+        public Field GetFieldAt(int row, int column)
+        {
+            return _fields[column][row];
+        }
     }
 }

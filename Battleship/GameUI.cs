@@ -108,13 +108,13 @@ namespace Battleship
             WriteColumnLetters();
             Console.WriteLine();
 
-            for (int x = 0; x < _game.Size; x++)
+            for (int column = 0; column < _game.Size; column++)
             {
-                WriteRowNumber(x + 1);
+                WriteRowNumber(column + 1);
 
-                for (int y = 0; y < _game.Size; y++)
+                for (int row = 0; row < _game.Size; row++)
                 {
-                    var field = _game.PlayerBoard.Fields[x][y];
+                    var field = _game.PlayerBoard.GetFieldAt(row, column);
                     var (text, color) = GetColoredTextDependingOnTypeAndHit(field);
                     WriteInColor($"{text} ", color);
                 }
@@ -129,13 +129,13 @@ namespace Battleship
             WriteColumnLetters();
             Console.WriteLine();
 
-            for (int x = 0; x < _game.Size; x++)
+            for (int column = 0; column < _game.Size; column++)
             {
-                WriteRowNumber(x + 1);
+                WriteRowNumber(column + 1);
 
-                for (int y = 0; y < _game.Size; y++)
+                for (int row = 0; row < _game.Size; row++)
                 {
-                    var field = _game.ComputerBoard.Fields[x][y];
+                    var field = _game.ComputerBoard.GetFieldAt(row, column);
                     if (field.IsHit)
                     {
                         var (text, color) = GetColoredTextDependingOnTypeAndHit(field);
@@ -157,13 +157,13 @@ namespace Battleship
             WriteColumnLetters();
             Console.WriteLine();
 
-            for (int x = 0; x < _game.Size; x++)
+            for (int column = 0; column < _game.Size; column++)
             {
-                WriteRowNumber(x + 1);
+                WriteRowNumber(column + 1);
 
-                for (int y = 0; y < _game.Size; y++)
+                for (int row = 0; row < _game.Size; row++)
                 {
-                    var field = _game.ComputerBoard.Fields[x][y];
+                    var field = _game.ComputerBoard.GetFieldAt(row, column);
                     var (text, color) = GetColoredTextDependingOnTypeAndHit(field);
                     WriteInColor($"{text} ", color);
                 }
