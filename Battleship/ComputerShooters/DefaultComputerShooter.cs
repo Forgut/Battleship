@@ -8,10 +8,13 @@ namespace Battleship.ComputerShooters
     {
         private readonly List<Coordinate> _shotCoordinates;
         private readonly int _gameSize;
-        public DefaultComputerShooter(int gameSize)
+        private readonly Random _rand;
+
+        public DefaultComputerShooter(int gameSize, Random rand)
         {
             _shotCoordinates = new List<Coordinate>();
             _gameSize = gameSize;
+            _rand = rand;
         }
 
         public Coordinate GetShotCoordinates()
@@ -34,7 +37,7 @@ namespace Battleship.ComputerShooters
         }
 
         private int GetRandomCoordinate(int min, int max)
-            => new Random().Next(min, max);
+            => _rand.Next(min, max);
     }
 }
 

@@ -1,4 +1,5 @@
 ﻿using Battleship.ComputerShooters;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Xunit;
@@ -12,7 +13,8 @@ namespace Battleship.Tests.Unit
         [Fact]
         public void Should_Generate_unique_coordinates_that_fit_in_game_size()
         {
-            var shooter = new DefaultComputerShooter(GAME_SIZE);
+            var rand = new Random(10);
+            var shooter = new DefaultComputerShooter(GAME_SIZE, rand);
 
             var shotResults = new List<Coordinate>()
             {

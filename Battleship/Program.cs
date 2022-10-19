@@ -45,7 +45,7 @@ namespace Battleship
             }
 
             var coordinatesParser = new DefaultCoordinatesParser(GAME_SIZE);
-            var computerShooter = new DefaultComputerShooter(GAME_SIZE);
+            var computerShooter = new DefaultComputerShooter(GAME_SIZE, random);
             return new GameUI(game, coordinatesParser, computerShooter)
             {
                 DebugMode = runInDebugMode,
