@@ -16,56 +16,23 @@ namespace Battleship.Logic.BoardSetting
             SetupDestroyer(board, takenCoordinates, Consts.DESTROYER_2_ID);
         }
 
-        private void SetupBattleship(ISettable board, List<Coordinate> takenCoordinates, int shipId)
+        private void SetupShip(ISettable board, 
+            List<Coordinate> takenCoordinates, 
+            int shipId,
+            int shipLength,
+            EFieldType shipType)
         {
             var direction = GetRandomDirection();
             int startX, startY;
             var maxPosition = board.Size;
             var minPosition = 0;
-            var shipLength = Consts.BATTLESHIP_LENGTH;
 
             if (direction == EDirection.Vertical)
-                SetupVerticalBattleship();
+                SetupVerticalShip();
             else
-                SetupHorizontalBattleship();
+                SetupHorizontalShip();
 
-            void SetupVerticalBattleship()
-            {
-                startX = GetRandomCoordinate(minPosition, maxPosition - shipLength);
-                startY = GetRandomCoordinate(minPosition, maxPosition);
-                for (int i = startX; i < startX + shipLength; i++)
-                {
-                    board.SetFieldType(i, startY, EFieldType.Battleship, shipId);
-                    takenCoordinates.Add(new Coordinate(i, startY));
-                }
-            }
-
-            void SetupHorizontalBattleship()
-            {
-                startX = GetRandomCoordinate(minPosition, maxPosition);
-                startY = GetRandomCoordinate(minPosition, maxPosition - shipLength);
-                for (int i = startY; i < startY + shipLength; i++)
-                {
-                    board.SetFieldType(startX, i, EFieldType.Battleship, shipId);
-                    takenCoordinates.Add(new Coordinate(startX, i));
-                }
-            }
-        }
-
-        private void SetupDestroyer(ISettable board, List<Coordinate> takenCoordinates, int shipId)
-        {
-            var direction = GetRandomDirection();
-            int startX, startY;
-            var maxPosition = board.Size;
-            var minPosition = 0;
-            var shipLength = Consts.DESTROYER_LENGTH;
-
-            if (direction == EDirection.Vertical)
-                SetupVerticalDestroyer();
-            else
-                SetupHorizontalDestroyer();
-
-            void SetupVerticalDestroyer()
+            void SetupVerticalShip()
             {
                 do
                 {
@@ -74,12 +41,12 @@ namespace Battleship.Logic.BoardSetting
                 } while (SelectedCoordinatesAreOnForbiddenList(takenCoordinates, startX, startY, EDirection.Vertical));
                 for (int i = startX; i < startX + shipLength; i++)
                 {
-                    board.SetFieldType(i, startY, EFieldType.Destroyer, shipId);
+                    board.SetFieldType(i, startY, shipType, shipId);
                     takenCoordinates.Add(new Coordinate(i, startY));
                 }
             }
 
-            void SetupHorizontalDestroyer()
+            void SetupHorizontalShip()
             {
                 do
                 {
@@ -89,10 +56,20 @@ namespace Battleship.Logic.BoardSetting
 
                 for (int i = startY; i < startY + shipLength; i++)
                 {
-                    board.SetFieldType(startX, i, EFieldType.Destroyer, shipId);
+                    board.SetFieldType(startX, i, shipType, shipId);
                     takenCoordinates.Add(new Coordinate(startX, i));
                 }
             }
+        }
+
+        private void SetupBattleship(ISettable board, List<Coordinate> takenCoordinates, int shipId)
+        {
+            SetupShip(board, takenCoordinates, shipId, Consts.BATTLESHIP_LENGTH, EFieldType.Battleship);
+        }
+
+        private void SetupDestroyer(ISettable board, List<Coordinate> takenCoordinates, int shipId)
+        {
+            SetupShip(board, takenCoordinates, shipId, Consts.DESTROYER_LENGTH, EFieldType.Destroyer);
         }
 
         private bool SelectedCoordinatesAreOnForbiddenList(IEnumerable<Coordinate> forbiddenCoordinates, int x, int y, EDirection direction)

@@ -6,12 +6,10 @@ namespace Battleship.CoordinatesParser
 {
     public class DefaultCoordinatesParser : ICoordinatesParser
     {
-        private readonly int _gameSize;
         private readonly CoordinatesValidator _coordinatesValidator;
 
         public DefaultCoordinatesParser(int gameSize)
         {
-            _gameSize = gameSize;
             _coordinatesValidator = new CoordinatesValidator(gameSize);
         }
 

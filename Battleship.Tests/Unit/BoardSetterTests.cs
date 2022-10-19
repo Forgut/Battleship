@@ -32,7 +32,7 @@ namespace Battleship.Tests.Unit
 
         private void AssertCorrectCountOnBoard(Board board, EFieldType type, int expectedCount)
         {
-            Assert.True(board.Fields.Sum(x => x.Count(y => y.Type == type)) == expectedCount);
+            Assert.Equal(expectedCount, board.Fields.Sum(x => x.Count(y => y.Type == type)));
         }
 
         private void AssertCorrectPlacementOnBoard(Board board, EFieldType type, int shipId, int expectedCount)
