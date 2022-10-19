@@ -32,7 +32,8 @@ namespace Battleship
         private static GameUI PrepareGameComponents(bool runInDebugMode)
         {
             const int GAME_SIZE = 10;
-            IBoardSetter boardSetter = new DefaultBoardSetter();
+            var random = new Random();
+            IBoardSetter boardSetter = new DefaultBoardSetter(random);
             IBoardShooter boardShooter = new DefaultBoardShooter();
             var game = new Game(GAME_SIZE, boardSetter, boardShooter);
             game.PrepareGame();

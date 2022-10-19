@@ -2,6 +2,7 @@
 using Battleship.Logic.BoardSetting;
 using Battleship.Logic.Core;
 using Battleship.Logic.Core.Enums;
+using System;
 using System.Linq;
 using Xunit;
 
@@ -12,7 +13,8 @@ namespace Battleship.Tests.Unit
         [Fact]
         public void Should_setup_battleship_as_5_fields_on_board()
         {
-            var boardSetter = new DefaultBoardSetter();
+            var random = new Random(10);
+            var boardSetter = new DefaultBoardSetter(random);
             var board = new Board(10);
             boardSetter.SetupBoard(board);
             AssertCorrectCountOnBoard(board, EFieldType.Battleship, Consts.BATTLESHIP_LENGTH);
@@ -22,7 +24,8 @@ namespace Battleship.Tests.Unit
         [Fact]
         public void Should_setup_destroyers_as_2_times_4_fields_on_board()
         {
-            var boardSetter = new DefaultBoardSetter();
+            var random = new Random(10);
+            var boardSetter = new DefaultBoardSetter(random);
             var board = new Board(10);
             boardSetter.SetupBoard(board);
             AssertCorrectCountOnBoard(board, EFieldType.Destroyer, Consts.DESTROYER_LENGTH * 2);

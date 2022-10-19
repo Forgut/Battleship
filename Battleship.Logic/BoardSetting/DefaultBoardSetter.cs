@@ -8,6 +8,13 @@ namespace Battleship.Logic.BoardSetting
 {
     public class DefaultBoardSetter : IBoardSetter
     {
+        private Random _rand;
+
+        public DefaultBoardSetter(Random rand)
+        {
+            _rand = rand;
+        }
+
         public void SetupBoard(ISettable board)
         {
             var takenCoordinates = new List<Coordinate>();
@@ -16,8 +23,18 @@ namespace Battleship.Logic.BoardSetting
             SetupDestroyer(board, takenCoordinates, Consts.DESTROYER_2_ID);
         }
 
-        private void SetupShip(ISettable board, 
-            List<Coordinate> takenCoordinates, 
+        private void SetupBattleship(ISettable board, List<Coordinate> takenCoordinates, int shipId)
+        {
+            SetupShip(board, takenCoordinates, shipId, Consts.BATTLESHIP_LENGTH, EFieldType.Battleship);
+        }
+
+        private void SetupDestroyer(ISettable board, List<Coordinate> takenCoordinates, int shipId)
+        {
+            SetupShip(board, takenCoordinates, shipId, Consts.DESTROYER_LENGTH, EFieldType.Destroyer);
+        }
+
+        private void SetupShip(ISettable board,
+            List<Coordinate> takenCoordinates,
             int shipId,
             int shipLength,
             EFieldType shipType)
@@ -38,7 +55,7 @@ namespace Battleship.Logic.BoardSetting
                 {
                     startX = GetRandomCoordinate(minPosition, maxPosition - shipLength);
                     startY = GetRandomCoordinate(minPosition, maxPosition);
-                } while (SelectedCoordinatesAreOnForbiddenList(takenCoordinates, startX, startY, EDirection.Vertical));
+                } while (SelectedCoordinatesAreOnForbiddenList(takenCoordinates, startX, startY, EDirection.Vertical, shipLength));
                 for (int i = startX; i < startX + shipLength; i++)
                 {
                     board.SetFieldType(i, startY, shipType, shipId);
@@ -52,7 +69,7 @@ namespace Battleship.Logic.BoardSetting
                 {
                     startX = GetRandomCoordinate(minPosition, maxPosition);
                     startY = GetRandomCoordinate(minPosition, maxPosition - shipLength);
-                } while (SelectedCoordinatesAreOnForbiddenList(takenCoordinates, startX, startY, EDirection.Horizontal));
+                } while (SelectedCoordinatesAreOnForbiddenList(takenCoordinates, startX, startY, EDirection.Horizontal, shipLength));
 
                 for (int i = startY; i < startY + shipLength; i++)
                 {
@@ -62,31 +79,25 @@ namespace Battleship.Logic.BoardSetting
             }
         }
 
-        private void SetupBattleship(ISettable board, List<Coordinate> takenCoordinates, int shipId)
-        {
-            SetupShip(board, takenCoordinates, shipId, Consts.BATTLESHIP_LENGTH, EFieldType.Battleship);
-        }
-
-        private void SetupDestroyer(ISettable board, List<Coordinate> takenCoordinates, int shipId)
-        {
-            SetupShip(board, takenCoordinates, shipId, Consts.DESTROYER_LENGTH, EFieldType.Destroyer);
-        }
-
-        private bool SelectedCoordinatesAreOnForbiddenList(IEnumerable<Coordinate> forbiddenCoordinates, int x, int y, EDirection direction)
+        private bool SelectedCoordinatesAreOnForbiddenList(IEnumerable<Coordinate> forbiddenCoordinates, 
+            int startX, 
+            int startY,
+            EDirection direction,
+            int length)
         {
             if (direction == EDirection.Vertical)
             {
-                for (int i = x; i < x + Consts.DESTROYER_LENGTH; i++)
+                for (int i = startX; i < startX + length; i++)
                 {
-                    if (forbiddenCoordinates.Any(coordinate => coordinate.X == i && coordinate.Y == y))
+                    if (forbiddenCoordinates.Any(coordinate => coordinate.X == i && coordinate.Y == startY))
                         return true;
                 }
             }
             else
             {
-                for (int i = y; i < y + Consts.DESTROYER_LENGTH; i++)
+                for (int i = startY; i < startY + length; i++)
                 {
-                    if (forbiddenCoordinates.Any(coordinate => coordinate.X == x && coordinate.Y == i))
+                    if (forbiddenCoordinates.Any(coordinate => coordinate.X == startX && coordinate.Y == i))
                         return true;
                 }
             }
@@ -94,9 +105,9 @@ namespace Battleship.Logic.BoardSetting
         }
 
         private int GetRandomCoordinate(int min, int max)
-            => new Random().Next(min, max);
+            => _rand.Next(min, max);
         private EDirection GetRandomDirection()
-            => new Random().Next(2) > 0 ? EDirection.Horizontal : EDirection.Vertical;
+            => _rand.Next(2) > 0 ? EDirection.Horizontal : EDirection.Vertical;
     }
 
     class Coordinate
